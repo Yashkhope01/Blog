@@ -10,15 +10,23 @@
     "cssVariables": true,
     "prefix": ""
   },
+<<<<<<< HEAD
   "iconLibrary": "radix",
+=======
+>>>>>>> 465bf704b39e16a55f1a925871e01ca8b697f44d
   "aliases": {
     "components": "@/components",
     "utils": "@/lib/utils",
     "ui": "@/components/ui",
     "lib": "@/lib",
     "hooks": "@/hooks"
+<<<<<<< HEAD
   },
   "registries": {
     "@aceternity": "https://ui.aceternity.com/registry/{name}.json"
   }
 }
+=======
+  }
+}
+>>>>>>> 465bf704b39e16a55f1a925871e01ca8b697f44d

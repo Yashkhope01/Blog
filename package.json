@@ -20,7 +20,10 @@
     "gray-matter": "^4.0.3",
     "html-react-parser": "^5.1.15",
     "lucide-react": "^0.438.0",
+<<<<<<< HEAD
     "motion": "^12.23.24",
+=======
+>>>>>>> 465bf704b39e16a55f1a925871e01ca8b697f44d
     "next": "14.2.7",
     "next-themes": "^0.3.0",
     "react": "^18",
