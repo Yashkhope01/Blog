@@ -85,24 +85,7 @@ export default function AdminDashboard() {
                         </div>
                     </Link>
 
-                    {/* Statistics */}
-                    <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg border-2 border-transparent">
-                        <div className="text-4xl mb-4">📊</div>
-                        <h3 className="text-xl font-bold mb-2">Statistics</h3>
-                        <p className="text-gray-600 dark:text-gray-400">
-                            View blog statistics and analytics
-                        </p>
-                        <p className="text-sm text-gray-500 mt-2">Coming soon...</p>
-                    </div>
-
-                    {/* Settings */}
-                    <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg border-2 border-transparent">
-                        <div className="text-4xl mb-4">⚙️</div>
-                        <h3 className="text-xl font-bold mb-2">Settings</h3>
-                        <p className="text-gray-600 dark:text-gray-400">
-                            Manage your account and preferences
-                        </p>
-                        <p className="text-sm text-gray-500 mt-2">Coming soon...</p>
+                    
                     </div>
                 </div>
             </div>
