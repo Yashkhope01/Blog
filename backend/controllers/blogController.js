@@ -1,9 +1,23 @@
 import Blog from '../models/Blog.js';
 import Comment from '../models/Comment.js';
+import cloudinary from "../config/cloudinary.js";
+import streamifier from "streamifier";
 
-// @desc    Get all blogs
-// @route   GET /api/blogs
-// @access  Public
+// Helper: upload file buffer to Cloudinary
+const uploadToCloudinary = (fileBuffer) => {
+    return new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+            { folder: "blog_images" },
+            (error, result) => {
+                if (result) resolve(result);
+                else reject(error);
+            }
+        );
+        streamifier.createReadStream(fileBuffer).pipe(stream);
+    });
+};
+
+// ========================== GET ALL BLOGS ==========================
 export const getBlogs = async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
@@ -46,9 +60,7 @@ export const getBlogs = async (req, res) => {
     }
 };
 
-// @desc    Get single blog by slug
-// @route   GET /api/blogs/:slug
-// @access  Public
+// ========================== GET BLOG BY SLUG ==========================
 export const getBlogBySlug = async (req, res) => {
     try {
         const blog = await Blog.findOne({ slug: req.params.slug })
@@ -77,14 +89,12 @@ export const getBlogBySlug = async (req, res) => {
     }
 };
 
-// @desc    Create new blog
-// @route   POST /api/blogs
-// @access  Private/Admin
+// ========================== CREATE BLOG ==========================
 export const createBlog = async (req, res) => {
     try {
         const { title, description, content, slug, category, tags, published } = req.body;
 
-        // Check if slug exists
+        // Check if slug already exists
         if (slug) {
             const existingBlog = await Blog.findOne({ slug });
             if (existingBlog) {
@@ -95,6 +105,14 @@ export const createBlog = async (req, res) => {
             }
         }
 
+        // Handle Image Upload (Cloudinary)
+        let imageUrl = req.body.image || "/typescript.webp";
+
+        if (req.file) {
+            const result = await uploadToCloudinary(req.file.buffer);
+            imageUrl = result.secure_url;
+        }
+
         const blog = await Blog.create({
             title,
             description,
@@ -102,7 +120,7 @@ export const createBlog = async (req, res) => {
             slug: slug || title.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, '').replace(/\s+/g, '-'),
             author: req.user._id,
             authorName: req.user.name,
-            image: req.file ? `/uploads/${req.file.filename}` : req.body.image || '/typescript.webp',
+            image: imageUrl,
             category,
             tags,
             published
@@ -120,9 +138,7 @@ export const createBlog = async (req, res) => {
     }
 };
 
-// @desc    Update blog
-// @route   PUT /api/blogs/:id
-// @access  Private/Admin
+// ========================== UPDATE BLOG ==========================
 export const updateBlog = async (req, res) => {
     try {
         let blog = await Blog.findById(req.params.id);
@@ -134,7 +150,7 @@ export const updateBlog = async (req, res) => {
             });
         }
 
-        // Check if slug is being changed and if new slug exists
+        // Slug validation
         if (req.body.slug && req.body.slug !== blog.slug) {
             const existingBlog = await Blog.findOne({ slug: req.body.slug });
             if (existingBlog) {
@@ -145,18 +161,16 @@ export const updateBlog = async (req, res) => {
             }
         }
 
-        // Update image if new file uploaded
+        // If new image uploaded
         if (req.file) {
-            req.body.image = `/uploads/${req.file.filename}`;
+            const result = await uploadToCloudinary(req.file.buffer);
+            req.body.image = result.secure_url;
         }
 
         blog = await Blog.findByIdAndUpdate(
             req.params.id,
             req.body,
-            {
-                new: true,
-                runValidators: true
-            }
+            { new: true, runValidators: true }
         );
 
         res.json({
@@ -171,9 +185,7 @@ export const updateBlog = async (req, res) => {
     }
 };
 
-// @desc    Delete blog
-// @route   DELETE /api/blogs/:id
-// @access  Private/Admin
+// ========================== DELETE BLOG ==========================
 export const deleteBlog = async (req, res) => {
     try {
         const blog = await Blog.findById(req.params.id);
@@ -185,7 +197,7 @@ export const deleteBlog = async (req, res) => {
             });
         }
 
-        // Delete all comments associated with this blog
+        // Delete associated comments
         await Comment.deleteMany({ blog: blog._id });
 
         await blog.deleteOne();
@@ -202,9 +214,7 @@ export const deleteBlog = async (req, res) => {
     }
 };
 
-// @desc    Like/Unlike blog
-// @route   PUT /api/blogs/:id/like
-// @access  Private
+// ========================== LIKE BLOG ==========================
 export const likeBlog = async (req, res) => {
     try {
         const blog = await Blog.findById(req.params.id);
@@ -216,14 +226,11 @@ export const likeBlog = async (req, res) => {
             });
         }
 
-        // Check if blog is already liked
         const isLiked = blog.likes.includes(req.user._id);
 
         if (isLiked) {
-            // Unlike
             blog.likes = blog.likes.filter(id => id.toString() !== req.user._id.toString());
         } else {
-            // Like
             blog.likes.push(req.user._id);
         }
 
@@ -244,9 +251,7 @@ export const likeBlog = async (req, res) => {
     }
 };
 
-// @desc    Get featured/top blogs
-// @route   GET /api/blogs/featured
-// @access  Public
+// ========================== FEATURED BLOGS ==========================
 export const getFeaturedBlogs = async (req, res) => {
     try {
         const blogs = await Blog.find({ published: true })
@@ -266,4 +271,3 @@ export const getFeaturedBlogs = async (req, res) => {
         });
     }
 };
-
