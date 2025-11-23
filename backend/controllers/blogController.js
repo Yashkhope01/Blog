@@ -114,17 +114,17 @@ export const createBlog = async (req, res) => {
         }
 
         const blog = await Blog.create({
-            title,
-            description,
-            content,
-            slug: slug || title.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, '').replace(/\s+/g, '-'),
-            author: req.user._id,
-            authorName: req.user.name,
-            image: imageUrl,
-            category,
-            tags,
-            published
-        });
+    title,
+    description,
+    content,
+    slug: slug || title.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, '').replace(/\s+/g, '-'),
+    author: req.user._id,
+    authorName: req.user.username || req.user.name || req.user.email,  
+    image: imageUrl,
+    category,
+    tags,
+    published
+});
 
         res.status(201).json({
             success: true,
