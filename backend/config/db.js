@@ -1,3 +1,4 @@
+
 import mongoose from 'mongoose';
 
 const connectDB = async () => {
@@ -12,3 +13,4 @@ const connectDB = async () => {
 
 export default connectDB;
 
+//1234567890
