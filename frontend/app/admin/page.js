@@ -84,9 +84,6 @@ export default function AdminDashboard() {
                             </p>
                         </div>
                     </Link>
-
-                    
-                    </div>
                 </div>
             </div>
         </div>
