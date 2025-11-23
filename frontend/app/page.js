@@ -31,7 +31,7 @@ export default function Home() {
     <ShootingStars className="absolute inset-0 w-full h-full -z-10 pointer-events-none" />
     <section className="relative z-10 container px-4 py-10 mx-auto lg:h-128 lg:flex lg:items-center">
           <div className="w-full text-center lg:text-left lg:w-1/2 lg:-mt-8">
-            <h1 className="text-3xl leading-snug text-white drop-shadow-lg md:text-4xl">
+            <h1 className="text-3xl leading-snug text-gray-600 dark:text-gray-50 text-white drop-shadow-lg md:text-4xl">
               <span className="font-semibold">ENGINEERED</span> THOUGHTS
               <br className="hidden lg:block" />
               <span className="font-semibold underline decoration-primary">
@@ -39,7 +39,7 @@ export default function Home() {
               </span>
             </h1>
 
-            <p className="mt-4 text-lg text-white/90 drop-shadow">
+            <p className="mt-4 text-lg text-white/90 text-gray-600 dark:text-gray-50 drop-shadow">
               Your one-stop space for fast, focused, and purpose-driven ideas
               <br className="hidden lg:block" />
               that ignite curiosity and push your ambitions forward.
