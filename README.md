@@ -4,7 +4,7 @@
 
 Your blog needs MongoDB to store data. Choose ONE option:
 
-### **Option 1: MongoDB Atlas (Cloud) - EASIEST** ✅
+### **Option 1: MongoDB Atlas (Cloud) - EASIEST** 
 
 1. Go to https://www.mongodb.com/cloud/atlas/register
 2. Create a FREE account
