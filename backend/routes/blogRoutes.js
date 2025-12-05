@@ -15,7 +15,7 @@ const router = express.Router();
 
 router.route('/')
     .get(getBlogs)
-    .post(protect, admin, upload.single('image'), createBlog);
+    .post(protect, upload.single('image'), createBlog);
 
 router.get('/featured', getFeaturedBlogs);
 
