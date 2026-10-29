@@ -36,6 +36,17 @@ Create a file named `.env.local` in the root folder (where package.json is) with
 NEXT_PUBLIC_API_URL=http://localhost:5000/api
 ```
 
+For the deployed frontend, the value must include the `/api` path:
+
+```env
+NEXT_PUBLIC_API_URL=https://blog-backend-p342.onrender.com/api
+```
+
+The backend's Render environment must also contain a valid `MONGODB_URI`.
+`Error: bad auth : authentication failed` is a MongoDB credential error, so
+replace the URI with the current Atlas database user's URI, URL-encode its
+password, and allow the Render service to connect in Atlas Network Access.
+
 ---
 
 ##  Step 2: Run Your Blog

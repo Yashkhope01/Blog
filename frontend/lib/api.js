@@ -1,4 +1,6 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL ;
+const configuredApiUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api').trim();
+const normalizedApiUrl = configuredApiUrl.replace(/\/+$/, '');
+const API_URL = normalizedApiUrl.endsWith('/api') ? normalizedApiUrl : `${normalizedApiUrl}/api`;
 
 // Helper function to get auth token
 const getAuthToken = () => {
@@ -241,4 +243,3 @@ export const contactAPI = {
         return handleResponse(response);
     },
 };
-

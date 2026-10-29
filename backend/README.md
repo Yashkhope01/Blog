@@ -39,6 +39,19 @@ NODE_ENV=development
 FRONTEND_URL=http://localhost:3000
 ```
 
+For Render, set the same values in the service's Environment variables. Use the
+MongoDB Atlas connection string from the database user that has access to the
+`blog` database:
+
+```env
+MONGODB_URI=mongodb+srv://<username>:<url-encoded-password>@<cluster-host>/blog?retryWrites=true&w=majority
+FRONTEND_URL=https://blog-frontend-s756.onrender.com
+```
+
+The Atlas database user password must be URL-encoded when it contains
+characters such as `@`, `:`, `/`, `?`, or `#`. Also add the Render outbound IP
+range (or `0.0.0.0/0` for temporary testing) to Atlas Network Access.
+
 3. Create uploads directory:
 ```bash
 mkdir uploads
@@ -142,4 +155,3 @@ Max file size: 5MB
 ## License
 
 MIT
-
