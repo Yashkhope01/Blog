@@ -43,9 +43,6 @@ export const StarsBackground = ({
     const updateStars = () => {
       if (canvasRef.current) {
         const canvas = canvasRef.current;
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return;
-
         const { width, height } = canvas.getBoundingClientRect();
         canvas.width = width;
         canvas.height = height;
@@ -55,14 +52,15 @@ export const StarsBackground = ({
 
     updateStars();
 
+    const canvas = canvasRef.current;
     const resizeObserver = new ResizeObserver(updateStars);
-    if (canvasRef.current) {
-      resizeObserver.observe(canvasRef.current);
+    if (canvas) {
+      resizeObserver.observe(canvas);
     }
 
     return () => {
-      if (canvasRef.current) {
-        resizeObserver.unobserve(canvasRef.current);
+      if (canvas) {
+        resizeObserver.unobserve(canvas);
       }
     };
   }, [

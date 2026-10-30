@@ -1,8 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import React, { useRef, useState, useEffect } from "react";
-import Navbar from "/components/Navbar";
 import Link from "next/link";
+import Image from "next/image";
 import { blogAPI } from "@/lib/api";
 import { StarsBackground } from "@/components/ui/stars-background";
 import { ShootingStars } from "@/components/ui/shooting-stars";
@@ -47,10 +47,14 @@ export default function Home() {
           </div>
 
           <div className="w-full mt-4 lg:mt-0 lg:w-1/2 relative z-10">
-            <img
+            <Image
               src="/left.png"
               alt="hero visual"
-              className="w-auto h-auto max-w-md mx-auto drop-shadow-xl"
+              width={640}
+              height={640}
+              priority
+              sizes="(max-width: 1024px) 90vw, 50vw"
+              className="h-auto w-auto max-w-md mx-auto drop-shadow-xl"
             />
           </div>
         </section>
@@ -85,6 +89,7 @@ export default function Home() {
                             : blog.image || "/typescript.webp"
                         }
                         alt={blog.title}
+                        loading="lazy"
                         className="w-full h-64 object-cover rounded-t-lg"
                       />
                       <div className="mt-4">
@@ -128,14 +133,14 @@ export default function Home() {
                 href="mailto:yashkhope123@gmail.com"
                 className="hover:scale-110 transition-transform duration-300"
               >
-                <img src="/mail.png" alt="GMail" className="w-20 h-20" />
+                <img src="/mail.png" alt="GMail" loading="lazy" width="80" height="80" className="w-20 h-20" />
               </a>
 
               <a
                 href="tel:+91 8975905912"
                 className="hover:scale-110 transition-transform duration-300 mt-3"
               >
-                <img src="/phone.png" alt="Contact" className="w-16 h-16" />
+                <img src="/phone.png" alt="Contact" loading="lazy" width="64" height="64" className="w-16 h-16" />
               </a>
 
               <a
@@ -144,7 +149,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="hover:scale-110 transition-transform duration-300"
               >
-                <img src="/insta.png" alt="Instagram" className="w-20 h-20" />
+                <img src="/insta.png" alt="Instagram" loading="lazy" width="80" height="80" className="w-20 h-20" />
               </a>
 
               <a
@@ -153,7 +158,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="hover:scale-110 transition-transform duration-300"
               >
-                <img src="/linkedin.png" alt="Linkedin" className="w-20 h-20" />
+                <img src="/linkedin.png" alt="Linkedin" loading="lazy" width="80" height="80" className="w-20 h-20" />
               </a>
 
               <a
@@ -162,7 +167,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="hover:scale-110 transition-transform duration-300"
               >
-                <img src="/github.png" alt="GitHub" className="w-20 h-20" />
+                <img src="/github.png" alt="GitHub" loading="lazy" width="80" height="80" className="w-20 h-20" />
               </a>
             </p>
           </div>

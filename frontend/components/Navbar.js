@@ -8,7 +8,7 @@ import LoadingBar from "react-top-loading-bar";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/lib/authContext";
 
-const Navbar = ({ footerRef }) => {
+const Navbar = () => {
   const [progress, setProgress] = useState(0);
   const pathname = usePathname();
   const router = useRouter();
@@ -16,12 +16,19 @@ const Navbar = ({ footerRef }) => {
 
   useEffect(() => {
     setProgress(20);
-    setTimeout(() => setProgress(40), 100);
-    setTimeout(() => setProgress(100), 400);
+    const progressTimer = setTimeout(() => setProgress(40), 100);
+    const completeTimer = setTimeout(() => setProgress(100), 400);
+
+    return () => {
+      clearTimeout(progressTimer);
+      clearTimeout(completeTimer);
+    };
   }, [pathname]);
 
   useEffect(() => {
-    setTimeout(() => setProgress(0), 50);
+    const resetTimer = setTimeout(() => setProgress(0), 50);
+
+    return () => clearTimeout(resetTimer);
   }, []);
 
   const handleLogout = () => {

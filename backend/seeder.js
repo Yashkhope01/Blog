@@ -35,9 +35,13 @@ const importData = async () => {
         console.log('Password: admin123');
 
         // Read markdown files from content folder
-        const contentDir = path.join(__dirname, '../content');
+        const contentDirectories = [
+            path.join(__dirname, '../content'),
+            path.join(__dirname, '../frontend/content')
+        ];
+        const contentDir = contentDirectories.find((directory) => fs.existsSync(directory));
         
-        if (fs.existsSync(contentDir)) {
+        if (contentDir) {
             const files = fs.readdirSync(contentDir);
 
             for (const file of files) {
@@ -131,4 +135,3 @@ if (process.argv[2] === '-d') {
 } else {
     importData();
 }
-

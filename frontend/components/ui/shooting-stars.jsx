@@ -1,6 +1,6 @@
 "use client";;
 import { cn } from "@/lib/utils";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 
 const getRandomStartPoint = () => {
   const side = Math.floor(Math.random() * 4);
@@ -31,9 +31,9 @@ export const ShootingStars = ({
   className,
 }) => {
   const [star, setStar] = useState(null);
-  const svgRef = useRef(null);
-
   useEffect(() => {
+    let timeoutId;
+
     const createStar = () => {
       const { x, y, angle } = getRandomStartPoint();
       const newStar = {
@@ -48,12 +48,12 @@ export const ShootingStars = ({
       setStar(newStar);
 
       const randomDelay = Math.random() * (maxDelay - minDelay) + minDelay;
-      setTimeout(createStar, randomDelay);
+      timeoutId = setTimeout(createStar, randomDelay);
     };
 
     createStar();
 
-    return () => {};
+    return () => clearTimeout(timeoutId);
   }, [minSpeed, maxSpeed, minDelay, maxDelay]);
 
   useEffect(() => {
@@ -93,7 +93,7 @@ export const ShootingStars = ({
   }, [star]);
 
   return (
-    <svg ref={svgRef} className={cn("w-full h-full absolute inset-0", className)}>
+    <svg className={cn("w-full h-full absolute inset-0", className)}>
       {star && (
         <rect
           key={star.id}

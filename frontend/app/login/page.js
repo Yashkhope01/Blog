@@ -34,9 +34,13 @@ export default function LoginPage() {
             <div className="w-full max-w-md">
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
                     <h1 className="text-3xl font-bold text-center mb-8">Login</h1>
-                    
+
                     {error && (
-                        <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                        <div
+                            className="mb-4 rounded border border-red-400 bg-red-100 p-3 text-red-700"
+                            role="alert"
+                            aria-live="polite"
+                        >
                             {error}
                         </div>
                     )}
@@ -49,9 +53,13 @@ export default function LoginPage() {
                             <input
                                 type="email"
                                 id="email"
+                                name="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
+                                autoComplete="email"
+                                inputMode="email"
                                 required
+                                aria-invalid={Boolean(error)}
                                 className="w-full px-4 py-2 border rounded-lg dark:bg-gray-900 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="admin@blog.com"
                             />
@@ -64,16 +72,18 @@ export default function LoginPage() {
                             <input
                                 type="password"
                                 id="password"
+                                name="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
+                                autoComplete="current-password"
                                 required
                                 className="w-full px-4 py-2 border rounded-lg dark:bg-gray-900 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="••••••••"
+                                placeholder="*******"
                             />
                         </div>
 
-                        <Button 
-                            type="submit" 
+                        <Button
+                            type="submit"
                             className="w-full"
                             disabled={loading}
                         >
@@ -83,7 +93,7 @@ export default function LoginPage() {
 
                     <div className="mt-6 text-center">
                         <p className="text-sm text-gray-600 dark:text-gray-400">
-                            Don't have an account?{' '}
+                            Don&apos;t have an account?{' '}
                             <Link href="/register" className="text-blue-500 hover:underline">
                                 Register
                             </Link>
@@ -92,8 +102,8 @@ export default function LoginPage() {
 
                     <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                         <p className="text-sm text-center text-gray-700 dark:text-gray-300">
-                            <strong>Demo Admin Account:</strong><br/>
-                            Email: admin@blog.com<br/>
+                            <strong>Demo Admin Account:</strong><br />
+                            Email: admin@blog.com<br />
                             Password: admin123
                         </p>
                     </div>
@@ -102,4 +112,3 @@ export default function LoginPage() {
         </div>
     );
 }
-
